@@ -71,6 +71,9 @@ public class ActivityPrincipal extends AppCompatActivity {
     }
 
 
+    public void irRegistroUsuario(View view) {
+        startActivity(new Intent(getApplicationContext(),ActivityRegistrarse.class));
+    }
 }
 
 

@@ -6,8 +6,12 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -40,48 +44,32 @@ public class ActivityRegistrarse extends AppCompatActivity {
 
     public void GuardarRegistroUsuario(View view) {
 
+        Usuario usuario = new Usuario(correo.getText().toString(),nombreUsuario.getText().toString(),genero.getText().toString(),fechaNacimiento.getText().toString(),contrasennaUsuario1.getText().toString());
 
-
-        /*boolean usuarioExiste = false;
-
-        if (nombreUsuario.getText().length() > 0 ){
-            //String user = contrasennaUsuario1.getText().toString();
-            //AQUÍ HAY QUE TRATAR DE HACER LA COMPARACION DE CONTRASEÑA1 Y CONTRASEÑA2 NO ME RESULTA Y DEBO DORMIR XD
-            for (int i =0; i < usuarios.size(); i++) {
-                System.out.println("nombre usuario array:" + usuarios.get(i).getNombreUsuario());
-                System.out.println("nombre usuairo nuevo:" + nombreUsuario.getText().toString());
-                if (usuarios.get(i).getNombreUsuario().equals(nombreUsuario.getText().toString())) {
-                    System.out.println("usuario dentro del IF:" + usuarios.get(i).getNombreUsuario());
-
-                    usuarioExiste = true;
-                    break;
+        mAuth.createUserWithEmailAndPassword(usuario.getCorreo(),usuario.getContrasenna()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    FirebaseUser usuarioNuevo = mAuth.getCurrentUser();
+                    mensajeOk(usuarioNuevo.getUid());
+                } else {
+                    mensajeError();
                 }
             }
-                if (usuarioExiste == true) {
-                    Toast.makeText(this, "Usuario ya existe", Toast.LENGTH_SHORT).show();
-                }else {
+        });
 
-                    if(contrasennaUsuario2.getText().toString().equals(contrasennaUsuario1.getText().toString())){
-                        try {
-                            Usuario u = new Usuario(nombreUsuario.getText().toString(), contrasennaUsuario1.getText().toString());
-                            usuarios.add(u);
-                            Toast.makeText(this, "Usuario Registrado", Toast.LENGTH_SHORT).show();
-                        } catch (Exception e){
-                            Toast.makeText(this,e.getMessage().toString(),Toast.LENGTH_SHORT).show();
-                            System.out.println(e.getMessage().toString());
-                        }
 
-                        // Toast.makeText(this, "Usuario Registrado", Toast.LENGTH_SHORT).show();
-                        Intent intento = new Intent(this, ActivityPrincipal.class);
-                        intento.putExtra("usuarios",usuarios);
-                        startActivity(intento);
-                    }else{
-                        Toast.makeText(this, "Contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-                    }
-                }
+    }
+    private void mensajeOk(String idUsuario){
+        Toast.makeText(this, "Usuario nuevo creado. ID: "+idUsuario, Toast.LENGTH_SHORT).show();
+    }
 
-        }else {
-            Toast.makeText(this, "Ingrese nombre de Usuario", Toast.LENGTH_SHORT).show();
-        }*/
+    private void mensajeError(){
+        Toast.makeText(this, "No se pudo crear la cuenta", Toast.LENGTH_SHORT).show();
+    }
+
+    public void irAIniciarSesion(View view){
+        Intent intento = new Intent(getApplicationContext(), ActivityPrincipal.class);
+        startActivity(intento);
     }
 }
