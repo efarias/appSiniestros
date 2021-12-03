@@ -6,55 +6,79 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
 public class ActivityPrincipal extends AppCompatActivity {
 
-    private ArrayList<Usuario> usuarios;
-    private EditText NombreUsuario;
-    private EditText contrasennaUsuario;
-    private ArrayList<Noticia> noticias;
+
+    private EditText correo, contrasennaUsuario;
+
+
+    private FirebaseAuth mAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_principal);
 
-        usuarios = (ArrayList<Usuario>) getIntent().getSerializableExtra("usuarios");
-        noticias = (ArrayList<Noticia>) getIntent().getSerializableExtra("noticias");
-        NombreUsuario = findViewById(R.id.nombreUsuario);
+
+        correo = findViewById(R.id.nombreUsuario);
         contrasennaUsuario = findViewById(R.id.contraseñaUsuario);
-        for (int i = 0; i < usuarios.size(); i++) {
-            System.out.println(usuarios.get(i).getNombreUsuario());
-        }
+
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-    public void IniciarSesion(View view) {
+        FirebaseUser usuarioActual = mAuth.getCurrentUser();
 
-        for (int i=0;i<usuarios.size();i++){
-            if (usuarios.get(i).getNombreUsuario().equals(NombreUsuario.getText().toString())){
-                if (usuarios.get(i).getContrasenna().equals(contrasennaUsuario.getText().toString())){
-                    Intent intento = new Intent(this, MainActivity.class);
-                    intento.putExtra("noticias", noticias);
-                    intento.putExtra("usuarios", usuarios);
+        if(usuarioActual != null){
+            Toast.makeText(this, "Usuario ID: "+usuarioActual.getUid()+ " / Nombre: "+usuarioActual.getDisplayName(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public void IniciarSesion(View view){
+        mAuth.signInWithEmailAndPassword(correo.getText().toString(), contrasennaUsuario.getText().toString()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    FirebaseUser usuario = mAuth.getCurrentUser();
+
+                    Toast.makeText(ActivityPrincipal.this, "Usuario: "+usuario.getUid(), Toast.LENGTH_SHORT).show();
+
+                    Intent intento = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intento);
-                }else {
-                    Toast.makeText(this, "Usuario o contraseña es incorrecta", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(ActivityPrincipal.this, "No fue posible iniciar sesión con los datos ingresados", Toast.LENGTH_SHORT).show();
                 }
             }
-        }
-
-
+        });
     }
-        public void Registrarse (View view){
+
+
+}
+
+
+
+        /*public void Registrarse (View view){
 
         Intent intento = new Intent(this, ActivityRegistrarse.class);
         intento.putExtra("usuarios",usuarios);
         startActivity(intento);
 
-        }
-    }
+        }*/

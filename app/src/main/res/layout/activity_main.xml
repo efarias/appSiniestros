@@ -24,17 +24,17 @@
 
         <Button
             android:id="@+id/btnCrearNoticia"
-            android:onClick="crearNoticia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Crear noticia" />
+            android:onClick="crearNoticia"
+            android:text="Registrar Siniestro" />
 
         <Button
             android:id="@+id/btnListadoNoticias"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="ListadoDeNoticias"
-            android:text="Vitacora Noticiosa" />
+            android:text="Vitacora" />
 
         <Button
             android:id="@+id/btnCerrarSesion"
@@ -48,7 +48,7 @@
         android:id="@+id/titulito"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reportero Ciudadano"
+        android:text="Registro de Siniestros"
         android:textSize="30sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline11"

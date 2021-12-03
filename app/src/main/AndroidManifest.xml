@@ -57,7 +57,7 @@
         </provider>
 
         <activity
-            android:name="com.example.appSiniestros.ActivityPrincipal"
+            android:name="com.example.appSiniestros.ActivityInicial"
             android:exported="true" />
         <activity
             android:name="com.example.appSiniestros.ActivityRegistrarse"
@@ -72,7 +72,7 @@
             android:name="com.example.appSiniestros.ActivityCrearNoticia"
             android:exported="true" />
         <activity
-            android:name="com.example.appSiniestros.ActivityInicial"
+            android:name="com.example.appSiniestros.ActivityPrincipal"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

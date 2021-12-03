@@ -14,6 +14,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -24,12 +27,16 @@ public class MainActivity extends AppCompatActivity {
     private int cantidad;
     private ImageView fotoPrincipal;
     private ArrayList<Usuario> usuarios;
-
+    private FirebaseAuth mAuth;
+    private FirebaseUser usuarioActual;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mAuth = FirebaseAuth.getInstance();
+        usuarioActual = mAuth.getCurrentUser();
 
         hayPermiso = false;
         fotoPrincipal = findViewById(R.id.imagenPrincipal);
@@ -105,9 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void CerrarSesion(View view) {
-        Intent intento = new Intent(this, ActivityPrincipal.class);
-        intento.putExtra("noticias",noticias);
-        intento.putExtra("usuarios", usuarios);
-        startActivity(intento);
+        mAuth.signOut();
+        startActivity(new Intent(getApplicationContext(), ActivityPrincipal.class));
     }
 }

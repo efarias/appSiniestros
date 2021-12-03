@@ -19,20 +19,20 @@ public class ActivityInicial extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inicial);
 
-        noticias = new ArrayList<Noticia>();
+/*        noticias = new ArrayList<Noticia>();
         usuarios = new ArrayList<Usuario>();
         Usuario usuario = new Usuario("test","test");
         usuarios.add(usuario);
-        vitacoras = new ArrayList<Vitacora>();
+        vitacoras = new ArrayList<Vitacora>();*/
 
     }
 
     public void EntrarPro(View view){
-        Intent intento = new Intent(this, ActivityPrincipal.class);
+/*        Intent intento = new Intent(this, ActivityPrincipal.class);
         intento.putExtra("noticias", noticias);
         intento.putExtra("usuarios", usuarios);
         intento.putExtra("vitacoras", vitacoras);
-        startActivity(intento);
+        startActivity(intento);*/
 
     }
 }

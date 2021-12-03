@@ -8,32 +8,41 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.util.ArrayList;
 
 public class ActivityRegistrarse extends AppCompatActivity {
 
-    private EditText nombreUsuario;
-    private EditText contrasennaUsuario1;
-    private EditText contrasennaUsuario2;
-    private ArrayList<Usuario> usuarios;
+    private EditText nombreUsuario, contrasennaUsuario1, contrasennaUsuario2;
+    private EditText correo, genero, fechaNacimiento;
+    private FirebaseAuth mAuth;
+    private FirebaseUser usuarioActual;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registrarse);
 
-        nombreUsuario = findViewById(R.id.nombreUsuarioRegistro);
+        nombreUsuario = findViewById(R.id.tvUserName);
+        correo = findViewById(R.id.tvUserEmail);
+        genero = findViewById(R.id.tvUserGenero);
+        fechaNacimiento = findViewById(R.id.tvUserFechaNacimiento);
         contrasennaUsuario1 = findViewById(R.id.contraseñaUsuarioRegistro);
         contrasennaUsuario2 = findViewById(R.id.contraseñaUsuarioRegistro2);
-        usuarios = (ArrayList<Usuario>) getIntent().getSerializableExtra("usuarios");
-        System.out.println(usuarios.size());
 
+        mAuth = FirebaseAuth.getInstance();
+        usuarioActual = mAuth.getCurrentUser();
 
     }
 
 
     public void GuardarRegistroUsuario(View view) {
 
-        boolean usuarioExiste = false;
+
+
+        /*boolean usuarioExiste = false;
 
         if (nombreUsuario.getText().length() > 0 ){
             //String user = contrasennaUsuario1.getText().toString();
@@ -73,6 +82,6 @@ public class ActivityRegistrarse extends AppCompatActivity {
 
         }else {
             Toast.makeText(this, "Ingrese nombre de Usuario", Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 }

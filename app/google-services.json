@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "635830942813",
+    "firebase_url": "https://appsiniestros-d6ea5-default-rtdb.firebaseio.com",
+    "project_id": "appsiniestros-d6ea5",
+    "storage_bucket": "appsiniestros-d6ea5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635830942813:android:7b43d1ecfa284b375461b4",
+        "android_client_info": {
+          "package_name": "com.example.appSiniestros"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635830942813-c7nbis33khbcia2n0oc2a7thisbruj4b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAq7u3inpPvd-_BrSP58KoHVqnFQsqLsEk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635830942813-c7nbis33khbcia2n0oc2a7thisbruj4b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
