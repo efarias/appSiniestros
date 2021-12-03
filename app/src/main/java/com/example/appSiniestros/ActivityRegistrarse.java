@@ -44,19 +44,24 @@ public class ActivityRegistrarse extends AppCompatActivity {
 
     public void GuardarRegistroUsuario(View view) {
 
-        Usuario usuario = new Usuario(correo.getText().toString(),nombreUsuario.getText().toString(),genero.getText().toString(),fechaNacimiento.getText().toString(),contrasennaUsuario1.getText().toString());
+        if(contrasennaUsuario2.getText().toString().equals(contrasennaUsuario1.getText().toString())){
+            Usuario usuario = new Usuario(correo.getText().toString(),nombreUsuario.getText().toString(),genero.getText().toString(),fechaNacimiento.getText().toString(),contrasennaUsuario1.getText().toString());
 
-        mAuth.createUserWithEmailAndPassword(usuario.getCorreo(),usuario.getContrasenna()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    FirebaseUser usuarioNuevo = mAuth.getCurrentUser();
-                    mensajeOk(usuarioNuevo.getUid());
-                } else {
-                    mensajeError();
+            mAuth.createUserWithEmailAndPassword(usuario.getCorreo(),usuario.getContrasenna()).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if(task.isSuccessful()){
+                        FirebaseUser usuarioNuevo = mAuth.getCurrentUser();
+                        mensajeOk(usuarioNuevo.getUid());
+                        startActivity(new Intent(getApplicationContext(),ActivityPrincipal.class));
+                    } else {
+                        mensajeError();
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            Toast.makeText(this, "Contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+        }
 
 
     }

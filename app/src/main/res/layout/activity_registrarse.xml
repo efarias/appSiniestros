@@ -49,24 +49,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Nombre" />
+            android:hint="Nombre"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/tvUserGenero"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Genero" />
+            android:hint="Genero"
+            android:inputType="textPersonName" />
 
         <EditText
             android:id="@+id/tvUserFechaNacimiento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Fecha de Nacimiento" />
+            android:hint="Fecha Nacimiento dd/mm/aaaa"
+            android:inputType="date" />
 
         <Space
             android:layout_width="match_parent"
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="********"
-            android:inputType="textPersonName" />
+            android:inputType="textPassword" />
 
         <TextView
             android:id="@+id/textView7"
@@ -112,7 +112,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="********"
-            android:inputType="textPersonName" />
+            android:inputType="textPassword" />
 
     </LinearLayout>
 
