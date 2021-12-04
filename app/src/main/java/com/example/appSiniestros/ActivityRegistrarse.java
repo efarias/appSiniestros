@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
@@ -21,8 +23,10 @@ public class ActivityRegistrarse extends AppCompatActivity {
 
     private EditText nombreUsuario, contrasennaUsuario1, contrasennaUsuario2;
     private EditText correo, genero, fechaNacimiento;
-    private FirebaseAuth mAuth;
-    private FirebaseUser usuarioActual;
+    FirebaseAuth mAuth;
+    FirebaseUser usuarioActual;
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +43,9 @@ public class ActivityRegistrarse extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         usuarioActual = mAuth.getCurrentUser();
 
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference();
+
     }
 
 
@@ -53,7 +60,9 @@ public class ActivityRegistrarse extends AppCompatActivity {
                     if(task.isSuccessful()){
                         FirebaseUser usuarioNuevo = mAuth.getCurrentUser();
                         mensajeOk(usuarioNuevo.getUid());
-                        startActivity(new Intent(getApplicationContext(),ActivityPrincipal.class));
+                        guardarDatosUser(usuario, usuarioNuevo);
+
+                        startActivity(new Intent(getApplicationContext(),MainActivity.class));
                     } else {
                         mensajeError();
                     }
@@ -65,6 +74,13 @@ public class ActivityRegistrarse extends AppCompatActivity {
 
 
     }
+
+    private void guardarDatosUser(Usuario usuario, FirebaseUser usuarioNuevo) {
+        reference.child("Usuarios").child(usuarioNuevo.getUid()).child("Fecha de Nacimiento").setValue(usuario.getFechaNacimiento());
+        reference.child("Usuarios").child(usuarioNuevo.getUid()).child("Genero").setValue(usuario.getGenero());
+        reference.child("Usuarios").child(usuarioNuevo.getUid()).child("Nombre").setValue(usuario.getNombreUsuario());
+    }
+
     private void mensajeOk(String idUsuario){
         Toast.makeText(this, "Usuario nuevo creado. ID: "+idUsuario, Toast.LENGTH_SHORT).show();
     }
@@ -73,8 +89,4 @@ public class ActivityRegistrarse extends AppCompatActivity {
         Toast.makeText(this, "No se pudo crear la cuenta", Toast.LENGTH_SHORT).show();
     }
 
-    public void irAIniciarSesion(View view){
-        Intent intento = new Intent(getApplicationContext(), ActivityPrincipal.class);
-        startActivity(intento);
-    }
 }

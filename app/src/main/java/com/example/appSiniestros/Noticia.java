@@ -76,43 +76,4 @@ public class Noticia implements Serializable {
                 ", usuario=" + usuario +
                 '}';
     }
-
-    /*
-    private String titulo;
-    private String nota;
-    private String foto;
-   //private ArrayList<Noticia> noticias;
-
-
-
-    public Noticia(String titulo, String nota, String foto) {
-        this.titulo = titulo;
-        this.nota = nota;
-        this.foto = foto;
-        //noticias = new ArrayList<Noticia>();
-
-    }
-    public Noticia() {
-        this.titulo = titulo;
-        this.nota = nota;
-        this.foto = foto;
-        //noticias = new ArrayList<Noticia>();
-    }
-
-
-    public String getTitulo() {
-        return titulo;
-    }
-
-    public String getNota() {
-       return nota;
-   }
-
-    public String getFoto() {
-        return foto;
-    }
-
-    // public ArrayList<Noticia> getNoticias() {
-    //    return noticias;
-   // }*/
 }
