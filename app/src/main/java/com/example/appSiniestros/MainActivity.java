@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private final String[] permisos = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
     private boolean hayPermiso;
-    private ArrayList<Noticia> noticias;
+    private ArrayList<Siniestro> siniestros;
     private int cantidad;
     private ImageView fotoPrincipal;
     private ArrayList<Usuario> usuarios;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
         hayPermiso = false;
         fotoPrincipal = findViewById(R.id.imagenPrincipal);
-        noticias = (ArrayList<Noticia>) getIntent().getSerializableExtra("noticias");
+        siniestros = (ArrayList<Siniestro>) getIntent().getSerializableExtra("noticias");
         usuarios = (ArrayList<Usuario>) getIntent().getSerializableExtra("usuarios");
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity {
     public void crearNoticia (View view){
         comprobarPermisos();
         if (hayPermiso){
-            Intent intento = new Intent(this, ActivityCrearNoticia.class);
-            intento.putExtra("noticias", noticias);
+            Intent intento = new Intent(this, ActivityCrearSiniestro.class);
+            intento.putExtra("noticias", siniestros);
             intento.putExtra("usuarios", usuarios);
             startActivity(intento);
 
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
     public void ListadoDeNoticias(View view){
 
         Intent intento = new Intent(this, ActivityListaDeNoticias.class);
-        intento.putExtra("noticias",noticias);
+        intento.putExtra("noticias", siniestros);
         startActivity(intento);
     }
 

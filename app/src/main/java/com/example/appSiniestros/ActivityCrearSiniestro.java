@@ -2,11 +2,17 @@ package com.example.appSiniestros;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -17,62 +23,84 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
-public class ActivityCrearNoticia extends AppCompatActivity {
+public class ActivityCrearSiniestro extends AppCompatActivity {
 
 
     private ImageView foto;
-    private EditText titulo;
-    private EditText nota;
+    private EditText titulo, nota, fecha;
+    private TextView latitud, longitud;
     private boolean fotoTomada;
-    private ArrayList<Noticia> noticias;
     private String rutaImagen;
-    private ArrayList<Usuario> usuarios;
-    private EditText fecha;
     private String ubicacion;
+    private String lat, lon;
+    private LocationManager locManager;
+    private Location location;
+
+    FirebaseUser usuarioActual;
+    FirebaseAuth mAuth;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crear_noticia);
+        setContentView(R.layout.activity_crear_siniestro);
 
         foto = findViewById(R.id.MostrarFotoNoticia);
         titulo = findViewById(R.id.tituloNoticia);
         nota = findViewById(R.id.textoNoticia);
         fecha = findViewById(R.id.tdFecha);
+        latitud = findViewById(R.id.tvLatitud);
+        longitud = findViewById(R.id.tvLongitud);
         fotoTomada = false;
-        noticias = (ArrayList<Noticia>) getIntent().getSerializableExtra("noticias");
-        usuarios = (ArrayList<Usuario>) getIntent().getSerializableExtra("usuarios");
 
-        // Spinner
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        String[] valores = {"Arica","Iquique","Antofagasta", "Santiago"};
-        spinner.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, valores));
-        spinner.setOnItemSelectedListener(new OnItemSelectedListener() {
+        mAuth = FirebaseAuth.getInstance();
+        usuarioActual = mAuth.getCurrentUser();
 
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id)
-            {
-                ubicacion = adapterView.getItemAtPosition(position).toString();
-            }
+        ubicacion();
+        latitud.setText(String.format("Latitud: %.4f", location.getLatitude()));
+        longitud.setText(String.format("Longitud: %.4f", location.getLongitude()));
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent)
-            {
-                // vacio
-
-            }
+        //obtener fecha y hora del momento actual
+        Date currentTime = Calendar.getInstance().getTime();
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        String hoy = formato.format(currentTime);
+        fecha.setText(hoy);
 
 
-    });
+
+
+    }
+
+    public Location ubicacion(){
+        //ubicacion
+
+        //Revisa si permisos de ubicación están permitidos
+        //Falta implementar un procedimiento en caso de que el gps esté desactivado
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(ActivityCrearSiniestro.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
+        }else{
+            locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            location = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+        }
+
+        return location;
     }
 
     public void tomarFoto(View view) {
@@ -88,7 +116,7 @@ public class ActivityCrearNoticia extends AppCompatActivity {
         }
 
         if(imagenArchivo != null){
-            Uri fotoUri = FileProvider.getUriForFile(this, "com.example.reporterociudadano.fileprovider", imagenArchivo);
+            Uri fotoUri = FileProvider.getUriForFile(this, "com.example.appSiniestros.fileprovider", imagenArchivo);
             intento.putExtra(MediaStore.EXTRA_OUTPUT,fotoUri);
             startActivityForResult(intento, 0);
         }
@@ -112,13 +140,10 @@ public class ActivityCrearNoticia extends AppCompatActivity {
 
         if (fotoTomada && titulo.getText().length() != 0 && nota.getText().length() != 0) {
 
-            Noticia n = new Noticia (titulo.getText().toString(),nota.getText().toString(),rutaImagen,fecha.getText().toString(),ubicacion,usuarios.get(0));
-            noticias.add(n);
+            Siniestro siniestro = new Siniestro(titulo.getText().toString(),nota.getText().toString(),rutaImagen,fecha.getText().toString(),location,usuarioActual);
             titulo.setText("");
             nota.setText("");
             //foto.setImageBitmap(null);
-            int cantidad = noticias.size();
-            Toast.makeText(this, "hay " + cantidad + " noticias", Toast.LENGTH_SHORT).show();
             Toast.makeText(this, "Noticia Guardada", Toast.LENGTH_SHORT).show();
 
             //pruebas
@@ -131,8 +156,6 @@ public class ActivityCrearNoticia extends AppCompatActivity {
 
             fotoTomada = false;
             Intent intento = new Intent(this, MainActivity.class);
-            intento.putExtra("noticias", noticias);
-            intento.putExtra("usuarios", usuarios);
             startActivity(intento);
         } else {
             Toast.makeText(this, "error, faltan datos por ingresar", Toast.LENGTH_SHORT).show();

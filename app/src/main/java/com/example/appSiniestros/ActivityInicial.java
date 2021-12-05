@@ -2,7 +2,6 @@ package com.example.appSiniestros;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,7 +9,7 @@ import java.util.ArrayList;
 
 public class ActivityInicial extends AppCompatActivity {
 
-    private ArrayList<Noticia> noticias;
+    private ArrayList<Siniestro> siniestros;
     private ArrayList<Usuario> usuarios;
     private ArrayList<Vitacora> vitacoras;
 

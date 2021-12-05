@@ -18,11 +18,11 @@ import java.util.ArrayList;
 
 public class AdaptadorNoticia extends RecyclerView.Adapter<AdaptadorNoticia.ViewHolder> {
 
-    private ArrayList<Noticia> noticias;
+    private ArrayList<Siniestro> siniestros;
 
-    public AdaptadorNoticia(ArrayList<Noticia> noticias){
+    public AdaptadorNoticia(ArrayList<Siniestro> siniestros){
 
-        this.noticias = noticias;
+        this.siniestros = siniestros;
     }
 
 
@@ -40,21 +40,21 @@ public class AdaptadorNoticia extends RecyclerView.Adapter<AdaptadorNoticia.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         int p = position;
-        Noticia noticia = new Noticia(noticias.get(p).getTitulo(),noticias.get(p).getNota(),noticias.get(p).getFoto(),noticias.get(p).getFecha(),noticias.get(p).getUbicacion(),noticias.get(p).getUsuario());
+        Siniestro siniestro = new Siniestro(siniestros.get(p).getTitulo(), siniestros.get(p).getNota(), siniestros.get(p).getFoto(), siniestros.get(p).getFecha(), siniestros.get(p).getUbicacion(), siniestros.get(p).getUsuario());
 
-        holder.titulo.setText(noticias.get(position).getTitulo());
-        holder.fecha.setText(noticias.get(position).getFecha());
+        holder.titulo.setText(siniestros.get(position).getTitulo());
+        holder.fecha.setText(siniestros.get(position).getFecha());
         holder.mostrarNoticia.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), MostrarNoticia.class);
-                intent.putExtra("noticia", noticia);
+                intent.putExtra("noticia", siniestro);
                 view.getContext().startActivity(intent);
 
             }
         });
 
-        File imagenFile = new File(noticias.get(position).getFoto());
+        File imagenFile = new File(siniestros.get(position).getFoto());
         if(imagenFile.exists()){
             Bitmap imgBitmap = BitmapFactory.decodeFile(imagenFile.getAbsolutePath());
             holder.foto.setImageBitmap(imgBitmap);
@@ -67,7 +67,7 @@ public class AdaptadorNoticia extends RecyclerView.Adapter<AdaptadorNoticia.View
     @Override
     public int getItemCount() {
 
-        return noticias.size();
+        return siniestros.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

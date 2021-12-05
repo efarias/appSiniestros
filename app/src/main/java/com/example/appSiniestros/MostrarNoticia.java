@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -14,12 +15,12 @@ import java.io.File;
 
 public class MostrarNoticia extends AppCompatActivity {
 
-    private Noticia noticia;
+    private Siniestro siniestro;
     private TextView titulo;
     private TextView fecha;
     private TextView nota;
     private ImageView foto;
-    private String ubicacion;
+    private Location ubicacion;
 
 
     @Override
@@ -27,19 +28,19 @@ public class MostrarNoticia extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostrar_noticia);
 
-          noticia = (Noticia) getIntent().getSerializableExtra("noticia");
+          siniestro = (Siniestro) getIntent().getSerializableExtra("noticia");
           titulo = findViewById(R.id.MostrarTituloNoticia);
           fecha = findViewById(R.id.tvFechaMostrar);
           nota = findViewById(R.id.MostrarTextoNoticia);
           foto = findViewById(R.id.MostrarFotoNoticia);
-          ubicacion = noticia.getUbicacion();
+          ubicacion = siniestro.getUbicacion();
 
-        titulo.setText(noticia.getTitulo());
-        fecha.setText(noticia.getFecha());
-        nota.setText(noticia.getNota());
+        titulo.setText(siniestro.getTitulo());
+        fecha.setText(siniestro.getFecha());
+        nota.setText(siniestro.getNota());
 
 
-        File imagenFile = new File(noticia.getFoto());
+        File imagenFile = new File(siniestro.getFoto());
         if(imagenFile.exists()){
             Bitmap imgBitmap = BitmapFactory.decodeFile(imagenFile.getAbsolutePath());
             foto.setImageBitmap(imgBitmap);

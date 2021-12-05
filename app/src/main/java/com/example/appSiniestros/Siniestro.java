@@ -1,17 +1,21 @@
 package com.example.appSiniestros;
 
+import android.location.Location;
+
+import com.google.firebase.auth.FirebaseUser;
+
 import java.io.Serializable;
 
-public class Noticia implements Serializable {
+public class Siniestro implements Serializable {
 
     private String titulo;
     private String nota;
     private String foto;
     private String fecha;
-    private String ubicacion;
-    private Usuario usuario;
+    private Location ubicacion;
+    private FirebaseUser usuario;
 
-    public Noticia(String titulo, String nota, String foto, String fecha, String ubicacion, Usuario usuario) {
+    public Siniestro(String titulo, String nota, String foto, String fecha, Location ubicacion, FirebaseUser usuario) {
         this.titulo = titulo;
         this.nota = nota;
         this.foto = foto;
@@ -52,19 +56,19 @@ public class Noticia implements Serializable {
         this.fecha = fecha;
     }
 
-    public String getUbicacion() {
+    public Location getUbicacion() {
         return ubicacion;
     }
 
-    public void setUbicacion(String ubicacion) {
+    public void setUbicacion(Location ubicacion) {
         this.ubicacion = ubicacion;
     }
 
-    public Usuario getUsuario() {
+    public FirebaseUser getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(FirebaseUser usuario) {
         this.usuario = usuario;
     }
 

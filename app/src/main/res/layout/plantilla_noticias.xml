@@ -47,7 +47,7 @@
                     android:id="@+id/btnVerNoticias"
                     android:layout_width="185dp"
                     android:layout_height="wrap_content"
-                    android:text="Ver noticias" />
+                    android:text="Ver siniestros" />
 
             </LinearLayout>
 

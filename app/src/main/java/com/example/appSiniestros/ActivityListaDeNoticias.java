@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ActivityListaDeNoticias extends AppCompatActivity {
 
-    private ArrayList<Noticia> noticias;
+    private ArrayList<Siniestro> siniestros;
     private RecyclerView recycler;
     private AdaptadorNoticia adaptador;
 
@@ -19,11 +19,11 @@ public class ActivityListaDeNoticias extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_de_noticias);
 
-        noticias = (ArrayList<Noticia>) getIntent().getSerializableExtra("noticias");
+        siniestros = (ArrayList<Siniestro>) getIntent().getSerializableExtra("noticias");
         recycler = findViewById(R.id.recyclerListaNoticias);
         recycler.setLayoutManager(new LinearLayoutManager(this));
 
-        adaptador = new AdaptadorNoticia(noticias);
+        adaptador = new AdaptadorNoticia(siniestros);
 
         recycler.setAdapter(adaptador);
 

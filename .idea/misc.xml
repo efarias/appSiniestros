@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/layout/activity_crear_noticia.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/activity_crear_siniestro.xml" value="0.3691123188405797" />
         <entry key="app/src/main/res/layout/activity_inicial.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_principal.xml" value="0.37604166666666666" />

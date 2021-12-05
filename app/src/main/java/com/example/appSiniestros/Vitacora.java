@@ -3,20 +3,20 @@ package com.example.appSiniestros;
 import java.io.Serializable;
 
 public class Vitacora implements Serializable {
-    private Noticia noticia;
+    private Siniestro siniestro;
     private Usuario usuario;
 
-    public Vitacora(Noticia noticia, Usuario usuario) {
-        this.noticia = noticia;
+    public Vitacora(Siniestro siniestro, Usuario usuario) {
+        this.siniestro = siniestro;
         this.usuario = usuario;
     }
 
-    public Noticia getNoticia() {
-        return noticia;
+    public Siniestro getNoticia() {
+        return siniestro;
     }
 
-    public void setNoticia(Noticia noticia) {
-        this.noticia = noticia;
+    public void setNoticia(Siniestro siniestro) {
+        this.siniestro = siniestro;
     }
 
     public Usuario getUsuario() {
