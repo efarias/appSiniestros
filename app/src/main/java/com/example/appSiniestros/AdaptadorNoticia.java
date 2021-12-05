@@ -40,7 +40,7 @@ public class AdaptadorNoticia extends RecyclerView.Adapter<AdaptadorNoticia.View
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         int p = position;
-        Siniestro siniestro = new Siniestro(siniestros.get(p).getTitulo(), siniestros.get(p).getNota(), siniestros.get(p).getFoto(), siniestros.get(p).getFecha(), siniestros.get(p).getUbicacion(), siniestros.get(p).getUsuario());
+        Siniestro siniestro = new Siniestro(siniestros.get(p).getTitulo(), siniestros.get(p).getNota(), siniestros.get(p).getFoto(), siniestros.get(p).getFecha(), siniestros.get(p).getUbicacion(), siniestros.get(p).getUsuario(), siniestros.get(p).getId());
 
         holder.titulo.setText(siniestros.get(position).getTitulo());
         holder.fecha.setText(siniestros.get(position).getFecha());

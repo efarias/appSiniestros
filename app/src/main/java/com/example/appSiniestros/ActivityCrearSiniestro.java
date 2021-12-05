@@ -6,7 +6,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -19,22 +18,19 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -46,13 +42,15 @@ public class ActivityCrearSiniestro extends AppCompatActivity {
     private TextView latitud, longitud;
     private boolean fotoTomada;
     private String rutaImagen;
-    private String ubicacion;
-    private String lat, lon;
     private LocationManager locManager;
-    private Location location;
+    private Location ubicacion;
+    private long idSiniestro;
 
     FirebaseUser usuarioActual;
     FirebaseAuth mAuth;
+
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
 
     @Override
@@ -70,16 +68,19 @@ public class ActivityCrearSiniestro extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         usuarioActual = mAuth.getCurrentUser();
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference();
 
         ubicacion();
-        latitud.setText(String.format("Latitud: %.4f", location.getLatitude()));
-        longitud.setText(String.format("Longitud: %.4f", location.getLongitude()));
+        latitud.setText(String.format("Latitud: %.4f", ubicacion.getLatitude()));
+        longitud.setText(String.format("Longitud: %.4f", ubicacion.getLongitude()));
 
         //obtener fecha y hora del momento actual
         Date currentTime = Calendar.getInstance().getTime();
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         String hoy = formato.format(currentTime);
         fecha.setText(hoy);
+        idSiniestro = Calendar.getInstance().getTimeInMillis();
 
 
 
@@ -96,11 +97,11 @@ public class ActivityCrearSiniestro extends AppCompatActivity {
             ActivityCompat.requestPermissions(ActivityCrearSiniestro.this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION}, 1);
         }else{
             locManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-            location = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            ubicacion = locManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
         }
 
-        return location;
+        return ubicacion;
     }
 
     public void tomarFoto(View view) {
@@ -140,23 +141,24 @@ public class ActivityCrearSiniestro extends AppCompatActivity {
 
         if (fotoTomada && titulo.getText().length() != 0 && nota.getText().length() != 0) {
 
-            Siniestro siniestro = new Siniestro(titulo.getText().toString(),nota.getText().toString(),rutaImagen,fecha.getText().toString(),location,usuarioActual);
-            titulo.setText("");
-            nota.setText("");
-            //foto.setImageBitmap(null);
+            Siniestro siniestro = new Siniestro(titulo.getText().toString(),nota.getText().toString(),rutaImagen,fecha.getText().toString(), ubicacion,usuarioActual,idSiniestro);
+
+            DatabaseReference referenceSiniestro = FirebaseDatabase.getInstance().getReference("Siniestros").child(usuarioActual.getUid()).child(String.valueOf(idSiniestro));
+            /*reference.child("Siniestros").child(usuarioActual.getUid()).child(String.valueOf(idSiniestro)).child("titulo").setValue(siniestro.getTitulo());
+            reference.child("Siniestros").child(usuarioActual.getUid()).child(String.valueOf(idSiniestro)).child("Fecha").setValue(siniestro.getFecha());*/
+            referenceSiniestro.child("titulo").setValue(siniestro.getTitulo());
+            referenceSiniestro.child("Fecha").setValue(siniestro.getFecha());
+            referenceSiniestro.child("Latitud").setValue(siniestro.getUbicacion().getLatitude());
+            referenceSiniestro.child("Longitud").setValue(siniestro.getUbicacion().getLongitude());
+            referenceSiniestro.child("Foto").setValue(siniestro.getFoto());
+            referenceSiniestro.child("Nota").setValue(siniestro.getNota());
+
             Toast.makeText(this, "Noticia Guardada", Toast.LENGTH_SHORT).show();
 
-            //pruebas
-            System.out.println(ubicacion);
-//            String t = noticias.get(titulo.getVerticalScrollbarPosition()).getTitulo();
-//            Toast.makeText(this, t, Toast.LENGTH_SHORT).show();
-//            String p = noticias.get(nota.getVerticalScrollbarPosition()).getNota();
-//            Toast.makeText(this, p, Toast.LENGTH_SHORT).show();
-//            Toast.makeText(this,rutaImagen,Toast.LENGTH_SHORT).show();
 
             fotoTomada = false;
-            Intent intento = new Intent(this, MainActivity.class);
-            startActivity(intento);
+            startActivity(new Intent(this, MainActivity.class));
+
         } else {
             Toast.makeText(this, "error, faltan datos por ingresar", Toast.LENGTH_SHORT).show();
         }

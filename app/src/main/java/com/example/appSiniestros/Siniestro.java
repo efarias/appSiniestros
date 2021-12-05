@@ -14,14 +14,24 @@ public class Siniestro implements Serializable {
     private String fecha;
     private Location ubicacion;
     private FirebaseUser usuario;
+    private long id;
 
-    public Siniestro(String titulo, String nota, String foto, String fecha, Location ubicacion, FirebaseUser usuario) {
+    public Siniestro(String titulo, String nota, String foto, String fecha, Location ubicacion, FirebaseUser usuario, long id) {
         this.titulo = titulo;
         this.nota = nota;
         this.foto = foto;
         this.fecha = fecha;
         this.ubicacion = ubicacion;
         this.usuario = usuario;
+        this.id = id;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getTitulo() {
