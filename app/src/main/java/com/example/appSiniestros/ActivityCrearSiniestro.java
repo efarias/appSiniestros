@@ -45,6 +45,7 @@ public class ActivityCrearSiniestro extends AppCompatActivity {
     private LocationManager locManager;
     private Location ubicacion;
     private long idSiniestro;
+    private Siniestro siniestro;
 
     FirebaseUser usuarioActual;
     FirebaseAuth mAuth;
@@ -72,8 +73,14 @@ public class ActivityCrearSiniestro extends AppCompatActivity {
         reference = database.getReference();
 
         ubicacion();
-        latitud.setText(String.format("Latitud: %.4f", ubicacion.getLatitude()));
-        longitud.setText(String.format("Longitud: %.4f", ubicacion.getLongitude()));
+        System.out.println(ubicacion);
+        if (ubicacion != null){
+            latitud.setText(String.format("Latitud: %.4f", ubicacion.getLatitude()));
+            longitud.setText(String.format("Longitud: %.4f", ubicacion.getLongitude()));
+        }else{
+            Toast.makeText(this,"No se obtuvo ubicacion GPS", Toast.LENGTH_SHORT).show();
+        }
+
 
         //obtener fecha y hora del momento actual
         Date currentTime = Calendar.getInstance().getTime();
@@ -141,7 +148,7 @@ public class ActivityCrearSiniestro extends AppCompatActivity {
 
         if (fotoTomada && titulo.getText().length() != 0 && nota.getText().length() != 0) {
 
-            Siniestro siniestro = new Siniestro(titulo.getText().toString(),nota.getText().toString(),rutaImagen,fecha.getText().toString(),ubicacion.getLatitude(),ubicacion.getLongitude(),usuarioActual,idSiniestro);
+            siniestro = new Siniestro(titulo.getText().toString(),nota.getText().toString(),rutaImagen,fecha.getText().toString(),ubicacion.getLatitude(),ubicacion.getLongitude(),usuarioActual,idSiniestro);
 
             DatabaseReference referenceSiniestro = FirebaseDatabase.getInstance().getReference("Siniestros").child(usuarioActual.getUid()).child(String.valueOf(idSiniestro));
 
@@ -173,9 +180,13 @@ public class ActivityCrearSiniestro extends AppCompatActivity {
         return imagen;
     }
 
-    public void AbrirMapa(View view) {
-        Intent intent = new Intent(this,MapsActivity.class);
-        startActivity(intent);
 
+    public void VerMapaSiniestro(View view) {
+        ubicacion();
+        System.out.println(ubicacion);
+        Intent intent = new Intent(this, MapsSiniestro.class);
+        intent.putExtra("latitud", ubicacion.getLatitude());
+        intent.putExtra("longitud", ubicacion.getLongitude());
+        startActivity(intent);
     }
 }

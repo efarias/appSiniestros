@@ -43,7 +43,7 @@ public class AdaptadorSiniestro extends FirebaseRecyclerAdapter<Siniestro, Adapt
         holder.mapaSiniestro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), MapsActivity.class);
+                Intent intent = new Intent(view.getContext(), MapsSiniestro.class);
                 intent.putExtra("latitud", model.getLatitud());
                 intent.putExtra("longitud", model.getLongitud());
                 view.getContext().startActivity(intent);

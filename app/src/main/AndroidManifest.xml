@@ -38,12 +38,9 @@
             android:name=".MapsSiniestro"
             android:exported="false"
             android:label="@string/title_activity_maps_siniestro" />
+
         <activity
-            android:name=".MapsActivity"
-            android:exported="false"
-            android:label="@string/title_activity_maps" />
-        <activity
-            android:name=".MostrarNoticia"
+            android:name=".MostrarSiniestro"
             android:exported="true" />
 
         <meta-data
@@ -60,9 +57,6 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity
-            android:name=".ActivityInicial"
-            android:exported="true" />
         <activity
             android:name=".ActivityRegistrarse"
             android:exported="true" />
