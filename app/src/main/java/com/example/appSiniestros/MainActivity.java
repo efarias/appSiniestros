@@ -115,4 +115,8 @@ public class MainActivity extends AppCompatActivity {
         mAuth.signOut();
         startActivity(new Intent(getApplicationContext(), ActivityPrincipal.class));
     }
+
+    public void abrirMapa(View view) {
+        startActivity(new Intent(getApplicationContext(), MapsSiniestro.class));
+    }
 }

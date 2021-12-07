@@ -1,5 +1,7 @@
+
 package com.example.appSiniestros;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
@@ -19,22 +21,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private double latitud;
     private double longitud;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        latitud = (double) getIntent().getSerializableExtra("latitud");
-        longitud = (double) getIntent().getSerializableExtra("longitud");
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
+        //setContentView(R.layout.activity_maps);
         setContentView(binding.getRoot());
 
+        latitud = (double) getIntent().getSerializableExtra("latitud");
+        longitud = (double) getIntent().getSerializableExtra("longitud");
+        System.out.println(latitud+" "+longitud);
+
+        //
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
-    /**
+
+/**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
      * This is where we can add markers or lines, add listeners or move the camera. In this case,
@@ -43,40 +51,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * it inside the SupportMapFragment. This method will only be triggered once the user has
      * installed Google Play services and returned to the app.
      */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng arica = new LatLng(-18.4746, -70.29792);
-        LatLng iquique = new LatLng(-20.22036,-70.13913);
-        LatLng antofagasta = new LatLng(-23.65236,-70.3954);
-        LatLng santiago =  new LatLng(-33.45694,-70.64827);
+        LatLng siniestro = new LatLng(latitud,longitud);
 
-        switch (ubicacion){
-            case "Arica":
-                mMap.addMarker(new MarkerOptions().position(arica).title("Arica"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(arica,15));
 
-                break;
-            case "Iquique":
-                mMap.addMarker(new MarkerOptions().position(iquique).title("Iquique"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(iquique,15));
-                break;
-            case "Antofagasta":
-                mMap.addMarker(new MarkerOptions().position(antofagasta).title("Antofagasta"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(antofagasta,15));
-                break;
-            case "Santiago":
-                mMap.addMarker(new MarkerOptions().position(santiago).title("Santiago"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(santiago,15));
-                break;
-            default:
-                mMap.addMarker(new MarkerOptions().position(arica).title("Arica"));
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(arica,15));
 
-        }
+                mMap.addMarker(new MarkerOptions().position(siniestro).title("Siniestro"));
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(siniestro,15));
+
 
         mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
     }

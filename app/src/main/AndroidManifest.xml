@@ -32,14 +32,18 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:value="AIzaSyAwBOvDnvmwb93UcBA7vNn_fMcm55ak8V8" />
 
         <activity
-            android:name="com.example.appSiniestros.MapsActivity"
+            android:name=".MapsSiniestro"
+            android:exported="false"
+            android:label="@string/title_activity_maps_siniestro" />
+        <activity
+            android:name=".MapsActivity"
             android:exported="false"
             android:label="@string/title_activity_maps" />
         <activity
-            android:name="com.example.appSiniestros.MostrarNoticia"
+            android:name=".MostrarNoticia"
             android:exported="true" />
 
         <meta-data
@@ -57,22 +61,22 @@
         </provider>
 
         <activity
-            android:name="com.example.appSiniestros.ActivityInicial"
+            android:name=".ActivityInicial"
             android:exported="true" />
         <activity
-            android:name="com.example.appSiniestros.ActivityRegistrarse"
+            android:name=".ActivityRegistrarse"
             android:exported="true" />
         <activity
-            android:name="com.example.appSiniestros.MainActivity"
+            android:name=".MainActivity"
             android:exported="true" />
         <activity
-            android:name="com.example.appSiniestros.ActivityListaDeNoticias"
+            android:name=".ActivityListaDeNoticias"
             android:exported="true" />
         <activity
-            android:name="com.example.appSiniestros.ActivityCrearSiniestro"
+            android:name=".ActivityCrearSiniestro"
             android:exported="true" />
         <activity
-            android:name="com.example.appSiniestros.ActivityPrincipal"
+            android:name=".ActivityPrincipal"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
