@@ -32,7 +32,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAwBOvDnvmwb93UcBA7vNn_fMcm55ak8V8" />
+            android:value="AIzaSyCMuUb_Yq4vqHzRGBaCVCmCKXUK6bg39iM" />
 
         <activity
             android:name=".MapsSiniestro"

@@ -9,7 +9,7 @@
     You can also add your credentials to an existing key, using these values:
 
     Package name:
-    com.example.reporterociudadano
+    com.example.appSiniestros
 
     SHA-1 certificate fingerprint:
     07:05:4C:EF:A4:D5:A0:C5:E1:29:93:21:B8:02:50:EB:52:B2:94:57
@@ -20,5 +20,5 @@
     Once you have your key (it starts with "AIza"), replace the "google_maps_key"
     string in this file.
     -->
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyAwBOvDnvmwb93UcBA7vNn_fMcm55ak8V8</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyCMuUb_Yq4vqHzRGBaCVCmCKXUK6bg39iM</string>
 </resources>
