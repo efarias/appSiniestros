@@ -141,17 +141,16 @@ public class ActivityCrearSiniestro extends AppCompatActivity {
 
         if (fotoTomada && titulo.getText().length() != 0 && nota.getText().length() != 0) {
 
-            Siniestro siniestro = new Siniestro(titulo.getText().toString(),nota.getText().toString(),rutaImagen,fecha.getText().toString(), ubicacion,usuarioActual,idSiniestro);
+            Siniestro siniestro = new Siniestro(titulo.getText().toString(),nota.getText().toString(),rutaImagen,fecha.getText().toString(),ubicacion.getLatitude(),ubicacion.getLongitude(),usuarioActual,idSiniestro);
 
             DatabaseReference referenceSiniestro = FirebaseDatabase.getInstance().getReference("Siniestros").child(usuarioActual.getUid()).child(String.valueOf(idSiniestro));
-            /*reference.child("Siniestros").child(usuarioActual.getUid()).child(String.valueOf(idSiniestro)).child("titulo").setValue(siniestro.getTitulo());
-            reference.child("Siniestros").child(usuarioActual.getUid()).child(String.valueOf(idSiniestro)).child("Fecha").setValue(siniestro.getFecha());*/
+
             referenceSiniestro.child("titulo").setValue(siniestro.getTitulo());
-            referenceSiniestro.child("Fecha").setValue(siniestro.getFecha());
-            referenceSiniestro.child("Latitud").setValue(siniestro.getUbicacion().getLatitude());
-            referenceSiniestro.child("Longitud").setValue(siniestro.getUbicacion().getLongitude());
-            referenceSiniestro.child("Foto").setValue(siniestro.getFoto());
-            referenceSiniestro.child("Nota").setValue(siniestro.getNota());
+            referenceSiniestro.child("fecha").setValue(siniestro.getFecha());
+            referenceSiniestro.child("latitud").setValue(siniestro.getLatitud());
+            referenceSiniestro.child("longitud").setValue(siniestro.getLongitud());
+            referenceSiniestro.child("foto").setValue(siniestro.getFoto());
+            referenceSiniestro.child("nota").setValue(siniestro.getNota());
 
             Toast.makeText(this, "Noticia Guardada", Toast.LENGTH_SHORT).show();
 

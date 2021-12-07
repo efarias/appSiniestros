@@ -9,6 +9,8 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_principal.xml" value="0.37604166666666666" />
         <entry key="app/src/main/res/layout/activity_registrarse.xml" value="0.37604166666666666" />
+        <entry key="app/src/main/res/layout/plantilla_noticias.xml" value="0.21197916666666666" />
+        <entry key="app/src/main/res/layout/plantilla_siniestros.xml" value="0.3691123188405797" />
       </map>
     </option>
   </component>

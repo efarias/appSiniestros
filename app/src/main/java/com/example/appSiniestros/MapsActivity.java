@@ -16,14 +16,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private ActivityMapsBinding binding;
-    private String ubicacion;
+    private double latitud;
+    private double longitud;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ubicacion = (String) getIntent().getSerializableExtra("ubicacion");
-        System.out.println(ubicacion);
+        latitud = (double) getIntent().getSerializableExtra("latitud");
+        longitud = (double) getIntent().getSerializableExtra("longitud");
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 

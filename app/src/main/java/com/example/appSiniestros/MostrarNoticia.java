@@ -33,7 +33,7 @@ public class MostrarNoticia extends AppCompatActivity {
           fecha = findViewById(R.id.tvFechaMostrar);
           nota = findViewById(R.id.MostrarTextoNoticia);
           foto = findViewById(R.id.MostrarFotoNoticia);
-          ubicacion = siniestro.getUbicacion();
+          //ubicacion = siniestro.getUbicacion();
 
         titulo.setText(siniestro.getTitulo());
         fecha.setText(siniestro.getFecha());

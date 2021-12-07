@@ -12,25 +12,21 @@ public class Siniestro implements Serializable {
     private String nota;
     private String foto;
     private String fecha;
-    private Location ubicacion;
+    private double latitud;
+    private double longitud;
     private FirebaseUser usuario;
     private long id;
 
-    public Siniestro(String titulo, String nota, String foto, String fecha, Location ubicacion, FirebaseUser usuario, long id) {
+    public Siniestro(){}
+
+    public Siniestro(String titulo, String nota, String foto, String fecha, double latitud, double longitud, FirebaseUser usuario, long id) {
         this.titulo = titulo;
         this.nota = nota;
         this.foto = foto;
         this.fecha = fecha;
-        this.ubicacion = ubicacion;
+        this.latitud = latitud;
+        this.longitud = longitud;
         this.usuario = usuario;
-        this.id = id;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
         this.id = id;
     }
 
@@ -66,12 +62,20 @@ public class Siniestro implements Serializable {
         this.fecha = fecha;
     }
 
-    public Location getUbicacion() {
-        return ubicacion;
+    public double getLatitud() {
+        return latitud;
     }
 
-    public void setUbicacion(Location ubicacion) {
-        this.ubicacion = ubicacion;
+    public void setLatitud(double latitud) {
+        this.latitud = latitud;
+    }
+
+    public double getLongitud() {
+        return longitud;
+    }
+
+    public void setLongitud(double longitud) {
+        this.longitud = longitud;
     }
 
     public FirebaseUser getUsuario() {
@@ -82,12 +86,11 @@ public class Siniestro implements Serializable {
         this.usuario = usuario;
     }
 
-    @Override
-    public String toString() {
-        return "Noticia{" +
-                "titulo='" + titulo + '\'' +
-                ", fecha=" + fecha +
-                ", usuario=" + usuario +
-                '}';
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }
