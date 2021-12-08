@@ -76,12 +76,3 @@ public class ActivityPrincipal extends AppCompatActivity {
     }
 }
 
-
-
-        /*public void Registrarse (View view){
-
-        Intent intento = new Intent(this, ActivityRegistrarse.class);
-        intento.putExtra("usuarios",usuarios);
-        startActivity(intento);
-
-        }*/

@@ -21,12 +21,13 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final String[] permisos = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+    private final String[] permisos = {
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION};
     private boolean hayPermiso;
-    private ArrayList<Siniestro> siniestros;
-    private int cantidad;
     private ImageView fotoPrincipal;
-    private ArrayList<Usuario> usuarios;
     private FirebaseAuth mAuth;
     private FirebaseUser usuarioActual;
 
@@ -40,8 +41,6 @@ public class MainActivity extends AppCompatActivity {
 
         hayPermiso = false;
         fotoPrincipal = findViewById(R.id.imagenPrincipal);
-        siniestros = (ArrayList<Siniestro>) getIntent().getSerializableExtra("noticias");
-        usuarios = (ArrayList<Usuario>) getIntent().getSerializableExtra("usuarios");
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M){
             requestPermissions(permisos, 100);
@@ -95,19 +94,13 @@ public class MainActivity extends AppCompatActivity {
     public void crearNoticia (View view){
         comprobarPermisos();
         if (hayPermiso){
-            Intent intento = new Intent(this, ActivityCrearSiniestro.class);
-            intento.putExtra("noticias", siniestros);
-            intento.putExtra("usuarios", usuarios);
-            startActivity(intento);
-
+            startActivity(new Intent(this,ActivityCrearSiniestro.class));
         }
     }
 
     public void ListadoDeNoticias(View view){
 
-        Intent intento = new Intent(this, ActivityListaDeNoticias.class);
-        intento.putExtra("noticias", siniestros);
-        startActivity(intento);
+        startActivity(new Intent(this,ActivityListaDeNoticias.class));
     }
 
 
@@ -116,7 +109,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(new Intent(getApplicationContext(), ActivityPrincipal.class));
     }
 
-    public void abrirMapa(View view) {
-        startActivity(new Intent(getApplicationContext(), MapsSiniestro.class));
-    }
 }
